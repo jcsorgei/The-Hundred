@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project By Jozef Csörgei</title>
+    <title>The Hundred: A Coding Project By Jozef Csörgei</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +12,10 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/site.css">
     <link rel="icon" type="image/png" href="img/favicon-32x32.png">
@@ -23,8 +27,8 @@
     <!-- ==== Nav Section ==== -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="img/logo_light.svg"
-                    class="d-inline-block align-text-top mt-1 mx-1" width="24" height="24"> APP NAME</a>
+            <a class="navbar-brand logoFont" href="#"><img src="img/logo_light.svg"
+                    class="d-inline-block align-text-top " width="24" height="24"> The Hundred</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,7 +48,7 @@
                         <a class="nav-link" target="_blank" href="#">Git Repo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">About</a>
+                        <a class="nav-link" target="_blank" href="https://jcsorgei-portfolio.netlify.app/">About</a>
                     </li>
                 </ul>
             </div>
@@ -53,22 +57,91 @@
     <!-- ==== Main Section ==== -->
     <main class="flex-shrink-0">
         <div class="container py-5 px-5 mt-5">
-            <h2 class="border-1 border-bottom border-dark">The Code for APP NAME.</h2>
+            <h2 class="border-1 border-bottom border-dark">The Code for The Hundred.</h2>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            //Call Hello World
-                            function HelloWorld(){
-                                alert("hello World");
+                            //get the values from the Page
+                            //starts or controller function
+                            function getValues() {
+                                //get values from the page
+                                let startValue = document.getElementById("startValue").value;
+                                let endValue = document.getElementById("endValue").value;
+                            
+                                //We need to validate our input
+                                //parse into Integers
+                                startValue = parseInt(startValue);
+                                endValue = parseInt(endValue);
+                            
+                                if (Number.isInteger(startValue) && Number.isInteger(endValue)) {
+                                    //we call generateNumbers
+                                    let numbers = generateNumbers(startValue, endValue);
+                                    //we call displayNumbers
+                                    displayNumbers(numbers);
+                            
+                                } else {
+                                    alert("You must enter integers");
+                                }
+                            
+                            
+                            }
+                            
+                            //generate numbers from startValue to the endValue
+                            //logic functions(s)
+                            function generateNumbers(sValue, eValue) {
+                            
+                                let numbers = [];
+                            
+                                //we want to get all numbers from start to end
+                            
+                                for (let index = sValue; index <= eValue; index++) {
+                                    //this will execute in a loop until index = eValue
+                                    numbers.push(index);
+                                }
+                            
+                                return numbers;
+                            
+                            }
+                            
+                            //display the numbers and mark even numbers bold
+                            //display or view functions
+                            function displayNumbers(numbers) {
+                            
+                                let templateRows = "";
+                            
+                                for (let index = 0; index < numbers.length; index++) {
+                            
+                                    let className = "even";
+                            
+                                    let number = numbers[index];
+                            
+                                    if(number % 2 == 0){
+                                        className = "even";
+                                    }else{
+                                        className="odd";
+                                    }
+                                    //This does not render correctly with Prism see the source
+                                    templateRows += `<tr><td class="${className}">${number}</td></tr>`;
+                                }
+                            
+                                document.getElementById("results").innerHTML = templateRows;
                             }
                         </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The Code is structed in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                    <p>The Code consists of 3 functions.</p>
+                    <h5>getValues</h5>
+                    <p>getValues is the entry point of the program. It takes the start and end values from the form
+                        inputs and parses them to Integer. If the parsing was successful, it passes the values to
+                        <strong>generateNumbers</strong> function. Otherwise it shows an alert message: "You must enter integers". </p>
+
+                    <h5>generateNumbers</h5>
+                    <p>generateNumbers takes a <strong>startValue</strong> and an <strong>endValue</strong> as parameters. It returns an array containing numbers from startValue to endValue (including).</p>
+                
+                    <h5>displayNumbers</h5>
+                    <p>displayNumbers takes an array as a parameter. It iterates over the array and adds each value as a row of a table to a template string. Finally it sets the selected table's innerHTML to the template string.</p>
                 </div>
             </div>
         </div>
@@ -85,11 +158,15 @@
                 </div>
                 <div class="col d-flex align-items-center justify-content-start justify-content-lg-end">
                     <div class="row">
-                        <div class="col social"><a target="_blank" href="https://www.linkedin.com/in/jozef-cs%C3%B6rgei-659347217/"><i class="fab fa-linkedin fa-2x"></i></a>
+                        <div class="col social"><a target="_blank"
+                                href="https://www.linkedin.com/in/jozef-cs%C3%B6rgei-659347217/"><i
+                                    class="fab fa-linkedin fa-2x"></i></a>
                         </div>
-                        <div class="col social"><a target="_blank" href="https://github.com/jcsorgei"><i class="fab fa-github fa-2x"></i></a>
+                        <div class="col social"><a target="_blank" href="https://github.com/jcsorgei"><i
+                                    class="fab fa-github fa-2x"></i></a>
                         </div>
-                        <div class="col social"><a target="_blank" href="https://twitter.com/JCsorgei"><i class="fab fa-twitter fa-2x"></i></a>
+                        <div class="col social"><a target="_blank" href="https://twitter.com/JCsorgei"><i
+                                    class="fab fa-twitter fa-2x"></i></a>
                         </div>
                     </div>
                 </div>
